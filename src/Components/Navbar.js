@@ -1,7 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import "./nav.css";
+import { UserContext } from "../Context/UserContext";
+import {auth} from '../firebase';
+import { Link, Router } from "react-router-dom";
 // import logo from "../Assets/logo.png";
 const Navbar = () => {
+
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
   const menuClick = () => {
     const menuBtn = document.querySelector(".menu-icon span");
     // const searchBtn = document.querySelector(".search-icon");
@@ -29,6 +34,17 @@ const Navbar = () => {
     // }
   };
 
+  const logout=()=>{
+    console.log("signing out")
+    auth.signOut().then(function() {
+      setIsLoggedIn(false);
+
+    }).catch(function(err) {
+      console.log(err.code,err.message)
+    });
+
+  }
+
   return (
     <div className="bg-white text-black fixed w-screen shadow z-20">
       <nav>
@@ -40,11 +56,22 @@ const Navbar = () => {
           <li onClick={cancelClick} className="bg-grey-500 rounded">
             <a href="#project">About</a>
           </li>
+         {isLoggedIn?(
+          <li onClick={cancelClick} className="bg-grey-200 rounded cursor-pointer" onClick={logout}>
+            <div >Logout</div>
+          </li>
+         ):(
           <li onClick={cancelClick} className="bg-grey-200 rounded">
-            <a href="#technology">Login</a>
+            <Link to="/login">Login</Link>
+          </li>
+         )}
+          
+          
+          <li onClick={cancelClick} className="bg-grey-200 rounded">
+            <Link to="/signup">Signup</Link>
           </li>
           <li onClick={cancelClick} className="bg-grey-200 rounded">
-            <a href="#team">Signup</a>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
           <li onClick={cancelClick} className="bg-grey-200 rounded">
             <a href="#contact">Contact</a>
