@@ -3,8 +3,8 @@ import React, { createContext, useState } from 'react'
 export const UserContext =createContext();
 
 export default function UserContextProvider(props) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isSeller, setIsSeller] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isSeller, setIsSeller] = useState(true);
     const [id, setId] = useState("")
 
     return (

@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 import { auth, firestore } from "../firebase";
+import { withRouter } from "react-router-dom";
 
-export default function Login() {
+ function Login(props) {
   const [email, setEmail] = useState("seller@test.com");
   const [password, setPassword] = useState("password");
   const [error, setError] = useState("asdad");
@@ -25,6 +26,7 @@ export default function Login() {
               
               setIsSeller(myuser.isSeller)
               setId(user.uid);
+              props.history.push("/dashboard")
 
             })
           } 
@@ -164,3 +166,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default withRouter(Login)

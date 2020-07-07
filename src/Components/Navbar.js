@@ -1,12 +1,13 @@
 import React, { useEffect, useContext } from "react";
 import "./nav.css";
 import { UserContext } from "../Context/UserContext";
-import {auth} from '../firebase';
+import { auth } from "../firebase";
 import { Link, Router } from "react-router-dom";
+import { CartContext } from "../Context/CartContext";
 // import logo from "../Assets/logo.png";
 const Navbar = () => {
-
-  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  const {cart}=useContext(CartContext);
   const menuClick = () => {
     const menuBtn = document.querySelector(".menu-icon span");
     // const searchBtn = document.querySelector(".search-icon");
@@ -34,47 +35,56 @@ const Navbar = () => {
     // }
   };
 
-  const logout=()=>{
-    console.log("signing out")
-    auth.signOut().then(function() {
-      setIsLoggedIn(false);
-
-    }).catch(function(err) {
-      console.log(err.code,err.message)
-    });
-
-  }
+  const logout = () => {
+    console.log("signing out");
+    auth
+      .signOut()
+      .then(function () {
+        setIsLoggedIn(false);
+      })
+      .catch(function (err) {
+        console.log(err.code, err.message);
+      });
+  };
 
   return (
     <div className="bg-white text-black fixed w-screen shadow z-20">
       <nav>
         <div onClick={cancelClick} class="logo flex">
-          
-          TurnBox
+          Spacenos Marketplace
         </div>
         <div class="nav-items">
           <li onClick={cancelClick} className="bg-grey-500 rounded">
-            <a href="#project">About</a>
+            <Link to="/">Home</Link>
           </li>
-         {isLoggedIn?(
-          <li onClick={cancelClick} className="bg-grey-200 rounded cursor-pointer" onClick={logout}>
-            <div >Logout</div>
-          </li>
-         ):(
-          <li onClick={cancelClick} className="bg-grey-200 rounded">
-            <Link to="/login">Login</Link>
-          </li>
-         )}
-          
-          
+
+          {isLoggedIn ? (
+            <li
+              onClick={cancelClick}
+              className="bg-grey-200 rounded cursor-pointer"
+              onClick={logout}
+            >
+              <div>Logout</div>
+            </li>
+          ) : (
+            <li onClick={cancelClick} className="bg-grey-200 rounded">
+              <Link to="/login">Login</Link>
+            </li>
+          )}
+
           <li onClick={cancelClick} className="bg-grey-200 rounded">
             <Link to="/signup">Signup</Link>
           </li>
           <li onClick={cancelClick} className="bg-grey-200 rounded">
             <Link to="/dashboard">Dashboard</Link>
           </li>
-          <li onClick={cancelClick} className="bg-grey-200 rounded">
-            <a href="#contact">Contact</a>
+          <li onClick={cancelClick}>
+            <Link to="/cart">
+              <button className="bg-black rounded text-white text-lg px-5 font-bold uppercase">
+                {" "}
+                Go to Cart ({cart.length})
+              </button>{" "}
+            </Link>
           </li>
         </div>
         <div class="menu-icon" onClick={menuClick}>
