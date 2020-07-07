@@ -15,6 +15,7 @@ import Home from './Components/Home';
 import CartContextProvider from './Context/CartContext';
 import Cart from './Components/Cart'
 import Checkout from './Components/Checkout';
+import ViewOrders from './Components/ViewOrders';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/signup"><Signup/> </Route>
         <Route  path="/dashboard"><Dash/> </Route>
         <Route  path="/dashboard/addprod"><NewProduct/> </Route>
+        <Route  path="/dashboard/vieworders"><ViewOrders/> </Route>
         </Router>
         </CartContextProvider>
       </UserContextProvider>

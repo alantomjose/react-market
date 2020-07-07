@@ -48,7 +48,7 @@ export default function ProductList() {
       let prod=selectedProd;
       prod={...prod,num:parseInt(selectedNum)}
       setSelectedProd(prod);
-      console.log(prod) 
+      // console.log(prod) 
     }, [selectedNum])
 
   return (

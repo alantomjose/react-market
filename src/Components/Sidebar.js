@@ -40,7 +40,7 @@ export default function Sidebar() {
               <li className="items-center">
                 <Link
                   className="text-gray-800 hover:text-gray-600  uppercase py-3 font-bold block"
-                  to="/"
+                  to="/dashboard/vieworders"
                 >
                   View Orders
                 </Link>
