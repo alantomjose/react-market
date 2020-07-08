@@ -51,7 +51,7 @@ const Navbar = () => {
     <div className="bg-white text-black fixed w-screen shadow z-20">
       <nav>
         <div onClick={cancelClick} class="logo flex">
-          Spacenos Marketplace
+          The Marketplace
         </div>
         <div class="nav-items">
           <li onClick={cancelClick} className="bg-grey-500 rounded">
@@ -66,18 +66,26 @@ const Navbar = () => {
             >
               <div>Logout</div>
             </li>
+
+            
           ) : (
             <li onClick={cancelClick} className="bg-grey-200 rounded">
               <Link to="/login">Login</Link>
             </li>
           )}
 
+          {!isLoggedIn ? (
+
           <li onClick={cancelClick} className="bg-grey-200 rounded">
             <Link to="/signup">Signup</Link>
           </li>
+
+          ) : null}
+          {isLoggedIn ? ( 
           <li onClick={cancelClick} className="bg-grey-200 rounded">
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/dashboard/addprod">Dashboard</Link>
           </li>
+          ) : null}
           <li onClick={cancelClick}>
             <Link to="/cart">
               <button className="bg-black rounded text-white text-lg px-5 font-bold uppercase">

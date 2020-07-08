@@ -1,8 +1,10 @@
 import React, { useState, useContext } from "react";
 import { auth, firestore } from "../firebase";
 import { UserContext } from "../Context/UserContext";
+import { withRouter } from "react-router-dom";
 
-export default function Signup() {
+
+ function Signup() {
   const [Seller, setSeller] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -11,12 +13,11 @@ export default function Signup() {
   const [address, setAddress] = useState("");
   const [company, setCompany] = useState("");
   const [err, setErr] = useState("");
+  const { isLoggedIn, setIsLoggedIn ,isSeller,setIsSeller,id, setId} = useContext(UserContext);
 
-  const { isLoggedIn, setIsLoggedIn, isSeller, setIsSeller } = useContext(
-    UserContext
-  );
+  
 
-  const signUp = () => {
+  const signUp = (props) => {
     if (email && name && password && confPassword) {
       if (password !== confPassword) {
         setErr("Confirm Password does not match");
@@ -26,12 +27,16 @@ export default function Signup() {
           .then((user) => {
             console.log(user.user.uid);
             let myuser = { email, name, address, company,isSeller:Seller?true:false };
+            setIsLoggedIn(true);
+          if(Seller)setIsSeller(true);
+          setId(user.user.uid)
             firestore
               .collection("users")
               .doc(user.user.uid)
               .set(myuser)
               .then(() => {
                 setErr("User Created");
+                // props.history.push("/");
               })
               .catch((err) => {
                 console.log(err);
@@ -41,6 +46,8 @@ export default function Signup() {
           .catch(function (error) {
             alert("Some Error Occured");
           });
+
+          
       }
     } else {
       setErr("Empty fields");
@@ -220,3 +227,6 @@ export default function Signup() {
     </div>
   );
 }
+
+
+export default withRouter(Signup);
